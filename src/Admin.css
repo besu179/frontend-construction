@@ -3,6 +3,10 @@
   min-height: 100vh;
 }
 
+.topbar {
+  display: none;
+}
+
 .sidebar {
   width: 240px;
   flex-shrink: 0;
@@ -20,6 +24,25 @@
   padding: 0 20px 20px;
   border-bottom: 1px solid #3a454a;
   margin-bottom: 12px;
+}
+
+.role-badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.sidebar-role {
+  align-self: flex-start;
+  margin: -4px 0 14px 20px;
+}
+
+.topbar .role-badge {
+  margin-left: auto;
 }
 
 .sidebar nav {
@@ -59,10 +82,77 @@
 .admin-content {
   flex: 1;
   padding: 32px;
+  min-width: 0;
 }
 
 .admin-content h1 {
   margin: 0;
   font-size: 28px;
   color: var(--dark);
+}
+
+.overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    padding: 0 16px;
+    background: var(--dark);
+    color: #fff;
+    z-index: 20;
+  }
+
+  .hamburger {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+
+  .topbar-brand {
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 30;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    overflow-y: auto;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 25;
+  }
+
+  .admin-content {
+    padding: 72px 20px 20px;
+  }
+
+  .admin-content h1 {
+    font-size: 22px;
+  }
 }

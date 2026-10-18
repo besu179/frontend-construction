@@ -30,10 +30,10 @@ function App() {
   }
 
   if (role === 'admin') {
-    return <AdminPage onLogout={() => setRole(null)} />
+    return <AdminPage role={role} onLogout={() => setRole(null)} />
   }
   else if (role === 'sales') {
-    return <SalesPage onLogout={() => setRole(null)} />
+    return <SalesPage role={role} onLogout={() => setRole(null)} />
   }
 
   if (role) {
