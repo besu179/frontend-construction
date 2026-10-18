@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import AdminPage from './AdminPage.jsx'
+import SalesPage from './SalesPage.jsx'
 import './App.css'
 
 function App() {
@@ -13,7 +15,7 @@ function App() {
     const name = username.trim().toLowerCase()
     const pass = password.trim()
 
-    if (name === 'admin' || name === 'sells') {
+    if (name === 'admin' || name === 'sales') {
       if (pass !== '1234') {
         setError('Invalid password')
         return
@@ -22,8 +24,16 @@ function App() {
       setError('')
       setUsername('')
       setPassword('')
+      return
     }
     setError('invalid username')
+  }
+
+  if (role === 'admin') {
+    return <AdminPage onLogout={() => setRole(null)} />
+  }
+  else if (role === 'sales') {
+    return <SalesPage onLogout={() => setRole(null)} />
   }
 
   if (role) {
