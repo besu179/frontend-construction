@@ -1,5 +1,16 @@
 import { useState } from 'react'
-import './Admin.css'
+import SidebarLayout from './components/SidebarLayout.jsx'
+import Dashboard from './admin/Dashboard.jsx'
+import Products from './admin/Products.jsx'
+import Sales from './admin/Sales.jsx'
+import Customers from './admin/Customers.jsx'
+import Suppliers from './admin/Suppliers.jsx'
+import Purchases from './admin/Purchases.jsx'
+import Inventory from './admin/Inventory.jsx'
+import Payments from './admin/Payments.jsx'
+import Reports from './admin/Reports.jsx'
+import UsersRoles from './admin/UsersRoles.jsx'
+import Settings from './admin/Settings.jsx'
 
 const MENU_ITEMS = [
   'Dashboard',
@@ -15,54 +26,34 @@ const MENU_ITEMS = [
   'Settings',
 ]
 
+const SECTIONS = {
+  Dashboard,
+  Products,
+  Sales,
+  Customers,
+  Suppliers,
+  Purchases,
+  Inventory,
+  Payments,
+  Reports,
+  'Users and Roles': UsersRoles,
+  Settings,
+}
+
 function AdminPage({ role, onLogout }) {
   const [active, setActive] = useState('Dashboard')
-  const [open, setOpen] = useState(false)
-
-  function selectItem(item) {
-    setActive(item)
-    setOpen(false)
-  }
+  const Section = SECTIONS[active]
 
   return (
-    <div className="admin-layout">
-      <header className="topbar">
-        <button
-          className="hamburger"
-          aria-label="Toggle menu"
-          onClick={() => setOpen(!open)}
-        >
-          ☰
-        </button>
-        <span className="topbar-brand">Construction Shop</span>
-        <span className="role-badge">{role}</span>
-      </header>
-
-      {open && <div className="overlay" onClick={() => setOpen(false)} />}
-
-      <aside className={`sidebar ${open ? 'open' : ''}`}>
-        <div className="brand">Construction Shop</div>
-        <span className="role-badge sidebar-role">{role}</span>
-        <nav>
-          {MENU_ITEMS.map((item) => (
-            <button
-              key={item}
-              className={`menu-item ${active === item ? 'active' : ''}`}
-              onClick={() => selectItem(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </nav>
-        <button className="menu-item logout" onClick={onLogout}>
-          Logout
-        </button>
-      </aside>
-
-      <main className="admin-content">
-        <h1>{active}</h1>
-      </main>
-    </div>
+    <SidebarLayout
+      role={role}
+      items={MENU_ITEMS}
+      active={active}
+      onActiveChange={setActive}
+      onLogout={onLogout}
+    >
+      <Section />
+    </SidebarLayout>
   )
 }
 
