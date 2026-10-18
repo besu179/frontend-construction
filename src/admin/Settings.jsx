@@ -15,14 +15,7 @@ function Settings() {
           Address
           <input type="text" defaultValue="Addis Ababa, Ethiopia" />
         </label>
-        <label>
-          Currency
-          <select defaultValue="ETB">
-            <option value="ETB">ETB (Birr)</option>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-          </select>
-        </label>
+        
         <button className="btn-primary" type="submit">
           Save Changes
         </button>
