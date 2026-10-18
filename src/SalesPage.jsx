@@ -1,61 +1,33 @@
 import { useState } from 'react'
-import './Admin.css'
+import SidebarLayout from './components/SidebarLayout.jsx'
+import NewSale from './admin/sales/NewSale.jsx'
+import AllSales from './admin/sales/AllSales.jsx'
+import DueSales from './admin/sales/DueSales.jsx'
+import SalesReturns from './admin/sales/SalesReturns.jsx'
 
-const MENU_ITEMS = [
-  'New Sale',
-  'All Sales',
-  'Due Sales',
-  'Sales Returns',
-]
+const MENU_ITEMS = ['New Sale', 'All Sales', 'Due Sales', 'Sales Returns']
+
+const SECTIONS = {
+  'New Sale': NewSale,
+  'All Sales': AllSales,
+  'Due Sales': DueSales,
+  'Sales Returns': SalesReturns,
+}
 
 function SalesPage({ role, onLogout }) {
   const [active, setActive] = useState('New Sale')
-  const [open, setOpen] = useState(false)
-
-  function selectItem(item) {
-    setActive(item)
-    setOpen(false)
-  }
+  const Section = SECTIONS[active]
 
   return (
-    <div className="admin-layout">
-      <header className="topbar">
-        <button
-          className="hamburger"
-          aria-label="Toggle menu"
-          onClick={() => setOpen(!open)}
-        >
-          ☰
-        </button>
-        <span className="topbar-brand">Construction Shop</span>
-        <span className="role-badge">{role}</span>
-      </header>
-
-      {open && <div className="overlay" onClick={() => setOpen(false)} />}
-
-      <aside className={`sidebar ${open ? 'open' : ''}`}>
-        <div className="brand">Construction Shop</div>
-        <span className="role-badge sidebar-role">{role}</span>
-        <nav>
-          {MENU_ITEMS.map((item) => (
-            <button
-              key={item}
-              className={`menu-item ${active === item ? 'active' : ''}`}
-              onClick={() => selectItem(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </nav>
-        <button className="menu-item logout" onClick={onLogout}>
-          Logout
-        </button>
-      </aside>
-
-      <main className="admin-content">
-        <h1>{active}</h1>
-      </main>
-    </div>
+    <SidebarLayout
+      role={role}
+      items={MENU_ITEMS}
+      active={active}
+      onActiveChange={setActive}
+      onLogout={onLogout}
+    >
+      <Section />
+    </SidebarLayout>
   )
 }
 
