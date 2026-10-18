@@ -15,19 +15,40 @@ const MENU_ITEMS = [
   'Settings',
 ]
 
-function AdminPage({ onLogout }) {
+function AdminPage({ role, onLogout }) {
   const [active, setActive] = useState('Dashboard')
+  const [open, setOpen] = useState(false)
+
+  function selectItem(item) {
+    setActive(item)
+    setOpen(false)
+  }
 
   return (
     <div className="admin-layout">
-      <aside className="sidebar">
+      <header className="topbar">
+        <button
+          className="hamburger"
+          aria-label="Toggle menu"
+          onClick={() => setOpen(!open)}
+        >
+          ☰
+        </button>
+        <span className="topbar-brand">Construction Shop</span>
+        <span className="role-badge">{role}</span>
+      </header>
+
+      {open && <div className="overlay" onClick={() => setOpen(false)} />}
+
+      <aside className={`sidebar ${open ? 'open' : ''}`}>
         <div className="brand">Construction Shop</div>
+        <span className="role-badge sidebar-role">{role}</span>
         <nav>
           {MENU_ITEMS.map((item) => (
             <button
               key={item}
               className={`menu-item ${active === item ? 'active' : ''}`}
-              onClick={() => setActive(item)}
+              onClick={() => selectItem(item)}
             >
               {item}
             </button>
@@ -37,6 +58,7 @@ function AdminPage({ onLogout }) {
           Logout
         </button>
       </aside>
+
       <main className="admin-content">
         <h1>{active}</h1>
       </main>
